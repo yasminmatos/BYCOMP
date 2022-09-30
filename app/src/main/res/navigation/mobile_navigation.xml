@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    android:label="@string/menu_social"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.projetofinal.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/lista2"
+            app:destination="@id/lista"
+            app:popUpTo="@id/nav_home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_pesquisar"
+        android:name="com.example.projetofinal.ui.gallery.GalleryFragment"
+        android:label="@string/menu_pesquisar"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/nav_promocoes"
+        android:name="com.example.projetofinal.ui.slideshow.SlideshowFragment"
+        android:label="@string/menu_promocoes"
+        tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/nav_avaliacao"
+        android:name="com.example.projetofinal.PesquisarFragment"
+        android:label="@string/menu_avaliacoes"
+        tools:layout="@layout/fragment_avaliacoes" />
+    <fragment
+        android:id="@+id/nav_social"
+        android:name="com.example.projetofinal.SocialFragment"
+        android:label="@string/menu_social"
+        tools:layout="@layout/fragment_social" />
+    <fragment
+        android:id="@+id/nav_adicionarnota"
+        android:name="com.example.projetofinal.AdicionarFragment"
+        android:label="@string/menu_adicionar"
+        tools:layout="@layout/fragment_adicionar" />
+    <fragment
+        android:id="@+id/lista"
+        android:name="com.example.projetofinal.Lista"
+        android:label="Lista"
+        tools:layout="@layout/fragment_lista" >
+        <action
+            android:id="@+id/lista_pesq"
+            app:destination="@id/pesquisar" />
+    </fragment>
+    <fragment
+        android:id="@+id/promocao"
+        android:name="com.example.projetofinal.promocao"
+        android:label="fragment_promocao"
+        tools:layout="@layout/fragment_promocao" />
+    <fragment
+        android:id="@+id/nav_social"
+        android:name="com.example.projetofinal.Rsocial"
+        android:label="@string/menu_social"
+        tools:layout="@layout/fragment_rsocial" />
+    <fragment
+        android:id="@+id/pesquisar"
+        android:name="com.example.projetofinal.Pesquisar"
+        android:label="fragment_pesquisar"
+        tools:layout="@layout/fragment_pesquisar" />
+</navigation>

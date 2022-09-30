@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <!-- home -->
+
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/casa"
+            android:title="@string/menu_home" />
+
+
+        <!-- *pesquisar-->
+        <item
+            android:id="@+id/nav_pesquisar"
+            android:icon="@drawable/lupa2"
+            android:title="@string/menu_pesquisar" />
+
+
+        <!-- *adicionar informaçoes-->
+        <item
+            android:id="@+id/nav_adicionarnota"
+            android:icon="@drawable/botao_adicionar"
+            android:title="@string/menu_adicionar" />
+
+        <!--*social -->
+        <item
+            android:id="@+id/nav_social"
+            android:icon="@drawable/social"
+            android:title="@string/menu_social" />
+
+        <!-- *avaliaçoes-->
+        <item
+            android:id="@+id/nav_avaliacao"
+            android:icon="@drawable/estrelapreto"
+            android:title="@string/menu_avaliacoes" />
+
+
+
+        <!--*historico -->
+        <item
+            android:id="@+id/nav_historico"
+            android:icon="@drawable/historia"
+            android:title="@string/menu_historico" />
+
+
+
+
+    </group>
+
+</menu>
