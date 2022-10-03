@@ -46,7 +46,11 @@
             android:icon="@drawable/historia"
             android:title="@string/menu_historico" />
 
-
+        <!--*alterar dados-->
+        <item
+            android:id="@+id/nav_perfil"
+            android:icon="@drawable/user"
+            android:title="@string/menu_perfil" />
 
 
     </group>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Perfil">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar12"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <TextView
+        android:id="@+id/textView34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Meu perfil "
+        android:textAllCaps="true"
+        android:textColor="#3F51B5"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="42dp"
+        tools:layout_editor_absoluteY="72dp" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/container"
+        android:ems="10"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="81dp"
+        tools:layout_editor_absoluteY="249dp" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/container"
+        android:ems="10"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="81dp"
+        tools:layout_editor_absoluteY="342dp" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/container"
+        android:ems="10"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="81dp"
+        tools:layout_editor_absoluteY="437dp" />
+
+    <TextView
+        android:id="@+id/textView37"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_light"
+        android:text="Nome de usuário"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        tools:layout_editor_absoluteX="81dp"
+        tools:layout_editor_absoluteY="191dp" />
+
+    <TextView
+        android:id="@+id/textView38"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_light"
+        android:text="E-mail"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        tools:layout_editor_absoluteX="81dp"
+        tools:layout_editor_absoluteY="301dp" />
+
+    <TextView
+        android:id="@+id/textView39"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_light"
+        android:text="Senha"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        tools:layout_editor_absoluteX="81dp"
+        tools:layout_editor_absoluteY="402dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#3F51B5"
+        android:text="Alterar dados"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        tools:layout_editor_absoluteX="248dp"
+        tools:layout_editor_absoluteY="525dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

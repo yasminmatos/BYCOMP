@@ -240,6 +240,6 @@
         app:layout_constraintStart_toStartOf="@+id/inputUser"
         app:layout_constraintTop_toTopOf="@+id/inputUser"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/user" />
+        app:srcCompat="@drawable/user"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -67,4 +67,9 @@
         android:name="com.example.projetofinal.Pesquisar"
         android:label="fragment_pesquisar"
         tools:layout="@layout/fragment_pesquisar" />
+    <fragment
+        android:id="@+id/nav_perfil"
+        android:name="com.example.projetofinal.Perfil"
+        android:label="@string/menu_perfil"
+        tools:layout="@layout/fragment_perfil" />
 </navigation>
