@@ -46,7 +46,7 @@ public class Login extends AppCompatActivity {
         Criarconta= findViewById(R.id.Criarconta);
         btLogar = findViewById(R.id.btLogar);
         user = v.findViewById(R.id.inputUserL);
-        senha = v.findViewById(R.id.inputUserL);
+        senha = v.findViewById(R.id.inputSenhaL);
 
 
         //ir oara tela de cadastro
