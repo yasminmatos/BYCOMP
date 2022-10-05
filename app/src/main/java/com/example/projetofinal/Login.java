@@ -1,12 +1,12 @@
 package com.example.projetofinal;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+//import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
+//import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Base64;
+//import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,14 +24,13 @@ import com.google.android.material.snackbar.Snackbar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+//import java.io.ByteArrayOutputStream;
+//import java.text.DateFormat;
+//import java.text.SimpleDateFormat;
+//import java.util.Date;
 
 public class Login extends AppCompatActivity {
 
-    View v;
     EditText user, senha;
     TextView Criarconta;
     Button btLogar;
@@ -45,8 +44,8 @@ public class Login extends AppCompatActivity {
 
         Criarconta= findViewById(R.id.Criarconta);
         btLogar = findViewById(R.id.btLogar);
-        user = v.findViewById(R.id.inputUserL);
-        senha = v.findViewById(R.id.inputSenhaL);
+        user = findViewById(R.id.inputUserL);
+        senha = findViewById(R.id.inputSenhaL);
 
 
         //ir oara tela de cadastro
@@ -64,6 +63,12 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
+
+                startActivity(new Intent(Login.this,Bycomp.class));
+
+
+/*
                     //Indicando que irá utilizar o webservice rodando no localhost do computador
                     String url = "http://10.0.2.2:5000/api/Usuario";
 
@@ -109,6 +114,8 @@ public class Login extends AppCompatActivity {
                     }catch (Exception exc){
                         exc.printStackTrace();
                     }
+                    */
+
                 }
         });
 

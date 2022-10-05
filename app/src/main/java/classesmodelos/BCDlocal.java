@@ -46,7 +46,6 @@ public class BCDlocal extends SQLiteOpenHelper {
             if(banco.insert("acesso ", null,valores) != -1){
                 banco.close();
                 return true;
-
             }
             else{
                 banco.close();
@@ -102,6 +101,10 @@ public class BCDlocal extends SQLiteOpenHelper {
         try {
             //Abrir a conexão com o banco de dados local
             SQLiteDatabase banco = getWritableDatabase();
+
+
+
+
 
             ContentValues valores = new ContentValues();
             valores.put("usuario", u); //coluna_da_tabela , valor a ser inserido
