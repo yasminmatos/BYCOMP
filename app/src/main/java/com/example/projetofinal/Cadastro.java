@@ -21,6 +21,8 @@ import com.google.android.material.snackbar.Snackbar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import classesmodelos.BCDlocal;
+
 public class Cadastro extends AppCompatActivity {
 
     TextView txtentrar;
@@ -43,10 +45,6 @@ public class Cadastro extends AppCompatActivity {
 
         btCadastrar = findViewById(R.id.btCadastrar);
 
-
-
-
-
         txtentrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,8 +61,9 @@ public class Cadastro extends AppCompatActivity {
 
                 //Indicando que irá utilizar o webservice rodando no localhost do computador
                 String url = "http://10.0.2.2:5000/api/Usuario";
-
                 try {
+
+
 
                     //Criar um objeto que irá transformar os dados preenchidos na tela em JSON
                     JSONObject dadosEnvio = new JSONObject();
@@ -84,6 +83,7 @@ public class Cadastro extends AppCompatActivity {
 
                                 @Override
                                 public void onResponse(JSONObject response) {
+
                                     Toast.makeText(Cadastro.this, "feito1", Toast.LENGTH_SHORT).show();
 
                                     try {
@@ -91,11 +91,16 @@ public class Cadastro extends AppCompatActivity {
                                         if(response.getInt("status") == 200){
                                             startActivity(new Intent(Cadastro.this,Bycomp.class));
 
-                                            Toast.makeText(Cadastro.this, "feito", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Cadastro.this, "deu certo ", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(Cadastro.this, Cadastro.CadastroUsuarioBCDLocal(inputUser.getText().toString(), inputSenha.getText().toString(),inputEmail.getText().toString()), Toast.LENGTH_SHORT).show();
+
                                         }else{
                                             Snackbar.make(findViewById(R.id.telaLogin), "Verifique se os dados estão corretos", Snackbar.LENGTH_SHORT).show();
                                         }
                                     } catch (JSONException e) {
+
+                                        Toast.makeText(Cadastro.this, "nao feito"+e.getMessage(), Toast.LENGTH_SHORT).show();
+
                                         e.printStackTrace();
                                         //Snackbar.make(findViewById(R.id.telaLogin), R.string.avisoErro, Snackbar.LENGTH_SHORT).show();
                                     }
@@ -113,7 +118,11 @@ public class Cadastro extends AppCompatActivity {
                     RequestQueue requisicao = Volley.newRequestQueue(Cadastro.this);
                     requisicao.add(configRequisicao);
 
-                }catch (Exception exc){
+                }
+
+
+
+                catch (Exception exc){
                     exc.printStackTrace();
                 }
 
@@ -121,9 +130,30 @@ public class Cadastro extends AppCompatActivity {
 
             }
 
-
         });
 
+        //metodo para cadastrar o usuario no banco de dados local, deve ser puchado em um toast
+        // para aparacer a mensagem em questao se deu certo ou nao
+
+        }
+      private static String CadastroUsuarioBCDLocal(String u, String s, String e){
+
+
+          Cadastro cadastro = new Cadastro();
+
+
+        //criar objeto da classe do banco dedados local
+          BCDlocal bcd = new BCDlocal(cadastro,1);
+
+          if(bcd.cadastrarUsuario(u,s,e)){
+              return "Usuario cadastrado com sucesso (Local)";
+
+
+          }else{
+              return  "Erro ao cadastrar (Local)";
+          }
+
+
+      }
 
     }
-}

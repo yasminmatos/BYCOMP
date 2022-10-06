@@ -14,8 +14,7 @@ public class BCDlocal extends SQLiteOpenHelper {
 
     private final String criaTabela = "create table acesso ("
             + "usuario varchar(60) not null ," +
-            "senha varchar (64) not null ," +
-            "email varchar (64) not null);" ;
+            "senha varchar (64) not null );";//SHA256
 
     public BCDlocal(@Nullable Context context,int version) {
         super(context, "BD_aplicativo",null, version);
@@ -23,14 +22,17 @@ public class BCDlocal extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        //Para executar o comando SQL
         sqLiteDatabase.execSQL(criaTabela);
 
     }
 
     //metodo para cadastrar (insert) na tabela "acesso"
     public boolean cadastrarUsuario( String u , String s, String e) {
-
         try {
+            //para acessar o bando de dados local é so criar
+            // um objeto da SQLitedatabase
+
             //Abrir a conexão com o banco de dados local
             SQLiteDatabase banco = getWritableDatabase();
 
@@ -39,7 +41,7 @@ public class BCDlocal extends SQLiteOpenHelper {
 
             ContentValues valores = new ContentValues();
             valores.put("usuario", u); //coluna_da_tabela , valor a ser inserido
-            valores.put("senha", s);
+            valores.put("senha", criptografar(s));
             valores.put("email", e);
 
             //chamar o metodo inser() e verificar o retorno
@@ -49,13 +51,13 @@ public class BCDlocal extends SQLiteOpenHelper {
             }
             else{
                 banco.close();
-                return true;
+                return false;
 
             }
 
         }
         catch (Exception erro){
-            return false;
+                return false;
 
         }
     }
