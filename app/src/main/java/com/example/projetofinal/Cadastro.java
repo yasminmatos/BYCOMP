@@ -22,7 +22,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import classesmodelos.BCDlocal;
-import classesmodelos.Usuario;
 
 public class Cadastro extends AppCompatActivity {
 
@@ -33,14 +32,10 @@ public class Cadastro extends AppCompatActivity {
     EditText inputSenha;
     EditText inputEmail;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
-
-
-
 
         inputUser = findViewById(R.id.inputUser);
         inputSenha = findViewById(R.id.inputSenha);
@@ -49,13 +44,6 @@ public class Cadastro extends AppCompatActivity {
         txtentrar = findViewById(R.id.txtEntrar);
 
         btCadastrar = findViewById(R.id.btCadastrar);
-
-        String nome = inputUser.getText().toString();
-
-
-
-        Usuario usuario = new Usuario(null,inputUser.getText().toString(),inputEmail.getText().toString(),inputSenha.getText().toString());
-
 
         txtentrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +92,7 @@ public class Cadastro extends AppCompatActivity {
                                             startActivity(new Intent(Cadastro.this,Bycomp.class));
 
                                             Toast.makeText(Cadastro.this, "deu certo ", Toast.LENGTH_SHORT).show();
-                   // Toast.makeText(Cadastro.this, Cadastro.CadastroUsuarioBCDLocal(usuario).toString(), Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(Cadastro.this, Cadastro.CadastroUsuarioBCDLocal(inputUser.getText().toString(), inputSenha.getText().toString(),inputEmail.getText().toString()), Toast.LENGTH_SHORT).show();
 
                                         }else{
                                             Snackbar.make(findViewById(R.id.telaLogin), "Verifique se os dados estão corretos", Snackbar.LENGTH_SHORT).show();
@@ -148,7 +136,7 @@ public class Cadastro extends AppCompatActivity {
         // para aparacer a mensagem em questao se deu certo ou nao
 
         }
-      private static String CadastroUsuarioBCDLocal(Usuario u ){
+      private static String CadastroUsuarioBCDLocal(String u, String s, String e){
 
 
           Cadastro cadastro = new Cadastro();
@@ -157,7 +145,7 @@ public class Cadastro extends AppCompatActivity {
         //criar objeto da classe do banco dedados local
           BCDlocal bcd = new BCDlocal(cadastro,1);
 
-          if(bcd.cadastrarUsuario(u)){
+          if(bcd.cadastrarUsuario(u,s,e)){
               return "Usuario cadastrado com sucesso (Local)";
 
 
