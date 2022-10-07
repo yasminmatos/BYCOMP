@@ -28,7 +28,7 @@ public class BCDlocal extends SQLiteOpenHelper {
     }
 
     //metodo para cadastrar (insert) na tabela "acesso"
-    public boolean cadastrarUsuario( String u , String s, String e) {
+    public boolean cadastrarUsuario(Usuario u) {
         try {
             //para acessar o bando de dados local é so criar
             // um objeto da SQLitedatabase
@@ -40,9 +40,9 @@ public class BCDlocal extends SQLiteOpenHelper {
             //que vão prencher cada coluna da tabela
 
             ContentValues valores = new ContentValues();
-            valores.put("usuario", u); //coluna_da_tabela , valor a ser inserido
-            valores.put("senha", criptografar(s));
-            valores.put("email", e);
+            valores.put("usuario", u.getNome()); //coluna_da_tabela , valor a ser inserido
+            valores.put("senha", criptografar(u.getSenha()));
+            valores.put("email", u.getEmail());
 
             //chamar o metodo inser() e verificar o retorno
             if(banco.insert("acesso ", null,valores) != -1){

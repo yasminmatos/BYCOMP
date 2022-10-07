@@ -1,5 +1,9 @@
 package com.example.projetofinal.ui.home;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
+import android.content.Intent;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -12,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -51,6 +56,16 @@ public class HomeFragment extends Fragment {
         Idpromocoes = view.findViewById(R.id.Idpromocoes);
         btLerNota = view.findViewById(R.id.btLerNota);
         txtview = view.findViewById(R.id.txtCronometro);
+
+        //uma das primeiras coisas a se fazer para pegar a localizaçao é pedir a permissao
+
+
+       // LocationManager gpsHAb = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+
+
+
+
 
 
         IdLista.setOnClickListener(new View.OnClickListener() {

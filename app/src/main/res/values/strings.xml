@@ -33,5 +33,6 @@
     <string name="Iniciar">Começar</string>
     <string name="iniciar">Iniciar</string>
     <string name="title_activity_fotos">fotos</string>
+    <string name="title_activity_maps">MapsActivity</string>
 
 </resources>
