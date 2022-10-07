@@ -3,7 +3,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
+
+import com.example.projetofinal.Login;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -62,6 +66,7 @@ public class BCDlocal extends SQLiteOpenHelper {
         }
     }
 
+
     //metodo para criptografar a senha
     private String criptografar (String senha){
 
@@ -95,7 +100,6 @@ public class BCDlocal extends SQLiteOpenHelper {
 
     }
 
-
     //metodo para logar
     public Usuario Logar( String u ) {
         Usuario usuario = null;
@@ -107,9 +111,6 @@ public class BCDlocal extends SQLiteOpenHelper {
 
 
 
-
-            ContentValues valores = new ContentValues();
-            valores.put("usuario", u); //coluna_da_tabela , valor a ser inserido
 
             return usuario;
         }

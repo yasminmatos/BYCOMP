@@ -19,10 +19,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.projetofinal.ui.home.HomeFragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import classesmodelos.BCDlocal;
 
 //import java.io.ByteArrayOutputStream;
 //import java.text.DateFormat;
@@ -63,61 +66,58 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                startActivity(new Intent(Login.this, Bycomp.class));
 
+                //Indicando que irá utilizar o webservice rodando no localhost do computador
+                String url = "http://10.0.2.2:5000/api/Usuario/login";
 
+                try {
+                    //Criar um objeto que irá transformar os dados preenchidos na tela em JSON
+                    JSONObject dadosEnvio = new JSONObject();
+                    //O nome dos parâmetros precisam ser iguais ao que o webservice espera receber
+                    dadosEnvio.put("user", user.getText().toString());
+                    dadosEnvio.put("senha", senha.getText().toString());
 
-                startActivity(new Intent(Login.this,Bycomp.class));
-
-
-/*
-                    //Indicando que irá utilizar o webservice rodando no localhost do computador
-                    String url = "http://10.0.2.2:5000/api/Usuario";
-
-                    try {
-                        //Criar um objeto que irá transformar os dados preenchidos na tela em JSON
-                        JSONObject dadosEnvio = new JSONObject();
-                        //O nome dos parâmetros precisam ser iguais ao que o webservice espera receber
-                        //no nosso caso são "nome", "email", "senha", "fotoPerfil" e "dataNascimento"
-                        dadosEnvio.put("nome", user.getText().toString());
-                        dadosEnvio.put("senha", senha.getText().toString());
-
-
-                        //Configurar a requisição que será enviada ao webservice
-                        JsonObjectRequest configRequisicao = new JsonObjectRequest(Request.Method.POST,
-                                url, dadosEnvio,
-                                new Response.Listener<JSONObject>() {
-                                    @Override
-                                    public void onResponse(JSONObject response) {
-                                        try {
-                                            if(response.getInt("status") == 200){
-                                                startActivity(new Intent(Login.this,Bycomp.class));
-                                            }else{
-                                                Snackbar.make(findViewById(R.id.telaLogin), "Verifique se os dados estão corretos", Snackbar.LENGTH_SHORT).show();
-                                            }
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                            //Snackbar.make(findViewById(R.id.telaLogin), R.string.avisoErro, Snackbar.LENGTH_SHORT).show();
+                    //Configurar a requisição que será enviada ao webservice
+                    JsonObjectRequest configRequisicao = new JsonObjectRequest(Request.Method.POST,
+                            url, dadosEnvio,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try {
+                                        if (response.getInt("status") == 200) {
+                                            BCDlocal bd =  null;
+                                            bd.Logar(user, senha);
+                                            Snackbar.make(findViewById(R.id.telaLogin), "Bem-vindo", Snackbar.LENGTH_SHORT).show();
+                                            Intent it = new Intent(Login.this, HomeFragment.class); //activity para um fragmento
+                                            startActivity(it);
+                                        } else {
+                                            Snackbar.make(findViewById(R.id.telaLogin), "Verifque se os dados estão corretos", Snackbar.LENGTH_SHORT).show();
                                         }
-                                    }
-                                },
-                                new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        error.printStackTrace();
-                                       // Snackbar.make(findViewById(R.id.telaLogin), R.string.avisoErro, Snackbar.LENGTH_SHORT).show();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                        Snackbar.make(findViewById(R.id.telaLogin), "Erro do JSON:" + e.toString(), Snackbar.LENGTH_SHORT).show();
                                     }
                                 }
-                        );
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    error.printStackTrace();
+                                    Snackbar.make(findViewById(R.id.telaLogin), "Erro resposta: " + error.toString(), Snackbar.LENGTH_SHORT).show();
+                                }
+                            }
+                    );
 
-                        RequestQueue requisicao = Volley.newRequestQueue(Login.this);
-                        requisicao.add(configRequisicao);
+                    RequestQueue requisicao = Volley.newRequestQueue(Login.this);
+                    requisicao.add(configRequisicao);
 
-                    }catch (Exception exc){
-                        exc.printStackTrace();
-                    }
-                    */
-
+                } catch (Exception exc) {
+                    exc.printStackTrace();
+                    Toast.makeText(Login.this, "Erro do envio de dados: " + exc.toString(), Toast.LENGTH_SHORT).show();
                 }
+            }
+
         });
 
 
