@@ -23,8 +23,8 @@
         android:background="#FFFFFF"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        tools:layout_editor_absoluteX="32dp"
-        tools:layout_editor_absoluteY="33dp" />
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="16dp" />
 
     <TextView
         android:id="@+id/textView34"
@@ -54,7 +54,7 @@
         app:layout_constraintHorizontal_bias="0.368"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView37"
-        app:layout_constraintVertical_bias="0.068" />
+        app:layout_constraintVertical_bias="0.13" />
 
     <EditText
         android:id="@+id/inputEmailUsuario"
@@ -68,22 +68,7 @@
         app:layout_constraintHorizontal_bias="0.368"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
-
-    <EditText
-        android:id="@+id/inputSenhaUsuario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/container"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.368"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView39"
-        app:layout_constraintVertical_bias="0.041" />
+        app:layout_constraintVertical_bias="0.623" />
 
     <TextView
         android:id="@+id/textView37"
@@ -95,10 +80,10 @@
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.258"
+        app:layout_constraintHorizontal_bias="0.259"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.259" />
+        app:layout_constraintVertical_bias="0.272" />
 
     <TextView
         android:id="@+id/textView38"
@@ -114,23 +99,7 @@
         app:layout_constraintHorizontal_bias="0.203"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputNomeUsuario"
-        app:layout_constraintVertical_bias="0.102" />
-
-    <TextView
-        android:id="@+id/textView39"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/poppins_light"
-        android:text="Senha"
-        android:textColor="#000000"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView35"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.202"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputEmailUsuario"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.16" />
 
     <Button
         android:id="@+id/btAlterarDados"
@@ -142,7 +111,22 @@
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.831"
+        app:layout_constraintHorizontal_bias="0.768"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.803" />
+
+    <Button
+        android:id="@+id/btAlterarSenha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#3F51B5"
+        android:text="Alterar senha"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.244"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.803" />
