@@ -69,7 +69,9 @@ public class Login extends AppCompatActivity {
                 startActivity(new Intent(Login.this, Bycomp.class));
 
                 //Indicando que irá utilizar o webservice rodando no localhost do computador
-                String url = "http://10.0.2.2:5000/api/Usuario/login";
+                String url = "http://10.0.2.2:5000/api/Usuario";
+
+
 
                 try {
                     //Criar um objeto que irá transformar os dados preenchidos na tela em JSON
@@ -87,16 +89,16 @@ public class Login extends AppCompatActivity {
                                     try {
                                         if (response.getInt("status") == 200) {
                                             BCDlocal bd =  null;
-                                            bd.Logar(user, senha);
-                                            Snackbar.make(findViewById(R.id.telaLogin), "Bem-vindo", Snackbar.LENGTH_SHORT).show();
+                                           // bd.Logar(user, senha);
+                                            Toast.makeText(Login.this, "Bem-vindo", Toast.LENGTH_SHORT).show();
                                             Intent it = new Intent(Login.this, HomeFragment.class); //activity para um fragmento
                                             startActivity(it);
                                         } else {
-                                            Snackbar.make(findViewById(R.id.telaLogin), "Verifque se os dados estão corretos", Snackbar.LENGTH_SHORT).show();
+                                            Toast.makeText(Login.this, "Verifque se os dados estão corretos", Toast.LENGTH_SHORT).show();
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
-                                        Snackbar.make(findViewById(R.id.telaLogin), "Erro do JSON:" + e.toString(), Snackbar.LENGTH_SHORT).show();
+                                        Toast.makeText(Login.this, "Erro do JSON:" + e.toString(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             },
@@ -104,7 +106,7 @@ public class Login extends AppCompatActivity {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     error.printStackTrace();
-                                    Snackbar.make(findViewById(R.id.telaLogin), "Erro resposta: " + error.toString(), Snackbar.LENGTH_SHORT).show();
+                                    Toast.makeText(Login.this, "Erro resposta: " + error.toString(), Toast.LENGTH_SHORT).show();
                                 }
                             }
                     );
