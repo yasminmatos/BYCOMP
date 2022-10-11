@@ -32,6 +32,11 @@ public class BCDlocal extends SQLiteOpenHelper {
 
     }
 
+    @Override
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+
+    }
+
     //metodo para cadastrar (insert) na tabela "acesso"
     public String cadastrarUsuario(Usuario u) {
         try {
@@ -111,5 +116,8 @@ public class BCDlocal extends SQLiteOpenHelper {
             c.close();
         } catch (Exception erro) {
             return "Login Falhou";
+        }
+        return "";
+
     }
 }

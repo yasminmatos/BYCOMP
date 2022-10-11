@@ -7,6 +7,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,12 +63,6 @@ public class HomeFragment extends Fragment {
 
        // LocationManager gpsHAb = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-
-
-
-
-
-
         IdLista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,6 +104,9 @@ public class HomeFragment extends Fragment {
                     public void onFinish() {
                         //quando acabar
                         //esconde txtview
+                        Intent open_camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(open_camera, 100);
+
                         txtview.setVisibility(View.GONE);
 
                         //display toast
@@ -117,9 +115,9 @@ public class HomeFragment extends Fragment {
                 }.start();
 
             }
+
+
         });
-
-
 
         return view;
     }
