@@ -26,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import classesmodelos.BCDlocal;
+import classesmodelos.Usuario;
 
 //import java.io.ByteArrayOutputStream;
 //import java.text.DateFormat;
@@ -43,8 +44,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //funções de tela login para tela
-
+        //pegando os ids
         Criarconta= findViewById(R.id.Criarconta);
         btLogar = findViewById(R.id.btLogar);
         user = findViewById(R.id.inputUserL);
@@ -61,17 +61,12 @@ public class Login extends AppCompatActivity {
         });
 
         //entrar na tela do aplicativo
-
         btLogar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 startActivity(new Intent(Login.this, Bycomp.class));
-
                 //Indicando que irá utilizar o webservice rodando no localhost do computador
                 String url = "http://10.0.2.2:5000/api/Usuario";
-
-
 
                 try {
                     //Criar um objeto que irá transformar os dados preenchidos na tela em JSON
@@ -87,10 +82,22 @@ public class Login extends AppCompatActivity {
                                 @Override
                                 public void onResponse(JSONObject response) {
                                     try {
+                                        //verifica se existe aquele user no banco
                                         if (response.getInt("status") == 200) {
+                                            //cadastrar usuatio no banco de dados local
+                                            //variaveis a serem utilizadas
                                             BCDlocal bd =  null;
-                                           // bd.Logar(user, senha);
+                                            Usuario u = null;
+                                            String resultado;
+
+                                            //pega os dados do input e coloca na variavel do tipo Usuario
+                                            u.setNome(user.getText().toString());
+                                            u.setSenha(user.getText().toString());
+
+                                            //coloca os dados no método que verifica os dados no banco local
+                                            resultado = bd.Logar(u);
                                             Toast.makeText(Login.this, "Bem-vindo", Toast.LENGTH_SHORT).show();
+                                            //vai para a tela inicial
                                             Intent it = new Intent(Login.this, HomeFragment.class); //activity para um fragmento
                                             startActivity(it);
                                         } else {
@@ -121,6 +128,7 @@ public class Login extends AppCompatActivity {
             }
 
         });
+
 
 
     }

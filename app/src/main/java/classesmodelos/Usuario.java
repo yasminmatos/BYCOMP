@@ -14,6 +14,13 @@ public class Usuario {
         this.senha = senha;
     }
 
+    public Usuario(String nome, String email, String senha) {
+        this.localusuario = localusuario;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+    }
+
     public String getLocalusuario() {
         return localusuario;
     }

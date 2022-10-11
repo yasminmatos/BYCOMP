@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import classesmodelos.BCDlocal;
+import classesmodelos.Usuario;
 
 public class Cadastro extends AppCompatActivity {
 
@@ -32,6 +34,7 @@ public class Cadastro extends AppCompatActivity {
     EditText inputUser;
     EditText inputSenha;
     EditText inputEmail;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +78,6 @@ public class Cadastro extends AppCompatActivity {
                     dadosEnvio.put("email", inputEmail.getText().toString());
                     dadosEnvio.put("user", inputUser.getText().toString());
 
-
-
                     //Configurar a requisição que será enviada ao webservice
                     JsonObjectRequest configRequisicao = new JsonObjectRequest(Request.Method.POST,
                             url, dadosEnvio,
@@ -84,16 +85,26 @@ public class Cadastro extends AppCompatActivity {
 
                                 @Override
                                 public void onResponse(JSONObject response) {
-
-                                    Toast.makeText(Cadastro.this, "feito1", Toast.LENGTH_SHORT).show();
-
                                     try {
-
                                         if (response.getInt("status") == 200) {
                                             startActivity(new Intent(Cadastro.this, Bycomp.class));
 
-                                            Toast.makeText(Cadastro.this, "deu certo ", Toast.LENGTH_SHORT).show();
-                                            // Toast.makeText(Cadastro.this, Cadastro.CadastroUsuarioBCDLocal(inputUser.getText().toString(), inputSenha.getText().toString(),inputEmail.getText().toString()), Toast.LENGTH_SHORT).show();
+                                            //insere o usuario cadastrado no banco de dados local
+                                            Toast.makeText(Cadastro.this, "Passou por aqui", Toast.LENGTH_SHORT);
+
+                                            //objetos a serem utilizados
+                                            BCDlocal bd = null;
+                                            Usuario usuario = null;
+
+                                            //pega os dados do input e muda o nome
+                                            usuario.setNome(inputUser.getText().toString());
+                                            usuario.setSenha(inputSenha.getText().toString());
+
+                                            String resultado = bd.cadastrarUsuario(usuario);
+
+                                            Toast.makeText(Cadastro.this, "Cadastrado com sucesso", Toast.LENGTH_SHORT).show();
+
+                                            Log.d("Resultado: ", resultado);
 
                                         } else {
                                             Toast.makeText(Cadastro.this, "Verifique se os dados estão corretos", Toast.LENGTH_SHORT).show();

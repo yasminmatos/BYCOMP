@@ -168,7 +168,7 @@
         android:background="@drawable/container"
         android:ems="10"
         android:fontFamily="@font/poppins_light"
-        android:hint="Digite aqui seu user"
+        android:hint="Digite aqui seu usuário"
         android:inputType="textPersonName"
         android:paddingLeft="50dp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -1,6 +1,9 @@
 package classesmodelos;
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
@@ -16,23 +19,21 @@ import java.security.NoSuchAlgorithmException;
 
 public class BCDlocal extends SQLiteOpenHelper {
 
-    private final String criaTabela = "create table acesso ("
-            + "usuario varchar(60) not null ," +
-            "senha varchar (64) not null );";//SHA256
-
     public BCDlocal(@Nullable Context context,int version) {
         super(context, "BD_aplicativo",null, version);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+    public void onCreate(SQLiteDatabase db) {
         //Para executar o comando SQL
-        sqLiteDatabase.execSQL(criaTabela);
+        String criaTabela = "create table usuarios ("
+                + "usuario varchar(60) not null ," +
+                "senha varchar (64) not null );";//SHA256
 
     }
 
     //metodo para cadastrar (insert) na tabela "acesso"
-    public boolean cadastrarUsuario(Usuario u) {
+    public String cadastrarUsuario(Usuario u) {
         try {
             //para acessar o bando de dados local é so criar
             // um objeto da SQLitedatabase
@@ -48,22 +49,13 @@ public class BCDlocal extends SQLiteOpenHelper {
             valores.put("senha", criptografar(u.getSenha()));
             valores.put("email", u.getEmail());
 
-            //chamar o metodo inser() e verificar o retorno
-            if(banco.insert("acesso ", null,valores) != -1){
-                banco.close();
-                return true;
-            }
-            else{
-                banco.close();
-                return false;
-
-            }
-
+            banco.insertOrThrow("usuarios", null, valores);
         }
-        catch (Exception erro){
-                return false;
-
+        catch (SQLiteConstraintException ex){
+                return "Erro ao cadastrar usuario";
         }
+
+        return "Sucesso ao cadastrar";
     }
 
 
@@ -85,10 +77,7 @@ public class BCDlocal extends SQLiteOpenHelper {
                 stringBuilder.append(String.format("%02X",0xFF & b));
 
             }
-
             return stringBuilder.toString();
-
-
 
         }
         catch(NoSuchAlgorithmException e){
@@ -97,33 +86,30 @@ public class BCDlocal extends SQLiteOpenHelper {
 
         }
                 return "";
-
     }
 
     //metodo para logar
-    public Usuario Logar( String u ) {
-        Usuario usuario = null;
-
+    @SuppressLint("Range")
+    public String Logar(Usuario u ) {
         try {
             //Abrir a conexão com o banco de dados local
-            SQLiteDatabase banco = getWritableDatabase();
+            SQLiteDatabase banco = getReadableDatabase();
+            String buscarUsuario = "SELECT * from usuarios WHERE usuario = " + "'" + u.getNome() + "'";
+            Cursor c = banco.rawQuery(buscarUsuario, null);
 
-
-
-
-
-            return usuario;
-        }
-        catch (Exception erro){
-            return usuario;
-
-        }
-    }
-
-
-
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+            //enquanto tiver dados para percorrer
+            while (c.moveToNext()) {
+                //verifica o nome de usuario
+                if (u.getNome().equals(c.getString(c.getColumnIndex("usuario")))) {
+                    //verifica a senha
+                    if (u.getSenha().equals(c.getString(c.getColumnIndex("senha")))) {
+                        return "Login efeutado com sucesso";
+                    }
+                }
+            }
+            banco.close();
+            c.close();
+        } catch (Exception erro) {
+            return "Login Falhou";
     }
 }
