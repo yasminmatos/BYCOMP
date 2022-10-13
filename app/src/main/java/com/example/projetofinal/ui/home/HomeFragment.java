@@ -2,7 +2,13 @@ package com.example.projetofinal.ui.home;
 
 import static androidx.core.content.ContextCompat.getSystemService;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,7 +32,9 @@ import com.example.projetofinal.R;
 import com.example.projetofinal.databinding.FragmentHomeBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -39,6 +47,11 @@ public class HomeFragment extends Fragment {
     Button Idpromocoes;
     FloatingActionButton btLerNota;
     TextView txtview;
+
+    //O classe abaixo irá fornecer os métodos para interagir com o GPS bem como recuperar os dados do posicionamento
+    private Location location;
+    private LocationManager locationManager;
+    private Address endereco;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -59,9 +72,47 @@ public class HomeFragment extends Fragment {
         txtview = view.findViewById(R.id.txtCronometro);
 
         //uma das primeiras coisas a se fazer para pegar a localizaçao é pedir a permissao
+        //variveis para armazenar a latitude e a longitude
+        double latitude = 0.0;
+        double longitude = 0.0;
+
+        /*verificaçao de permiçao*/
+
+        if (ActivityCompat.checkSelfPermission(binding.home.getContext(), Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
+
+            //solicitar a permição do usuario
+
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},120);
 
 
-       // LocationManager gpsHAb = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        }
+
+            locationManager = (LocationManager) getSystemService(view.getContext().LOCATION_SERVICE);
+            location=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        if (location != null){
+
+            longitude = location.getLongitude();
+            latitude = location.getLatitude();
+        }
+
+        //retornando um toast para ver os dados adquirido ,VOLTADO PARA TESTES ESSE TOAST
+        try {
+            endereco = BuscaEndereco(latitude,longitude);
+
+            Toast.makeText(view.getContext(), " Longitude "+latitude+
+                            "Latitude"+longitude+
+                            "Cidade"+endereco.getLocality()+
+                            "Estado"+endereco.getCountryName()
+                    , Toast.LENGTH_SHORT).show();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
 
         IdLista.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,9 +173,52 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    //ESSE AKI É PERIGOSO PRESTAR ATENÇAO POIS É GAMBIARRA
+    private Object getSystemService(String locationService) {
+        Object o = "Object";
+        return o;
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
+
+    //metodo para achar o endereço do usuario
+
+    public Address BuscaEndereco(double lat, double lon) throws IOException {
+
+        Geocoder geocoder;
+        Address endereco= null ;
+
+        List<Address> enderecos;
+
+        geocoder = new Geocoder(getContext());
+
+
+        //pega o endereço e coloca na lista de endereços
+        enderecos = geocoder.getFromLocation(lat,lon,1);
+
+
+        if(enderecos.size()>0){
+
+            endereco = enderecos.get(0);
+
+        }
+        //retorna o primeiro endereço
+        return endereco;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 }
