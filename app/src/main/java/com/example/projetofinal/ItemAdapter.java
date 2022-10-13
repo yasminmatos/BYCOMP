@@ -17,7 +17,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ProdutosViewHo
 
 
     //construtor
-    public ItemAdapter(ArrayList<ItemPesq> itempe) {
+    public ItemAdapter(List<ItemPesq> itempe) {
         this.listaitem = itempe;
     }
 
