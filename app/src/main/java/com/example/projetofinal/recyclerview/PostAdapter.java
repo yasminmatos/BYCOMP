@@ -1,12 +1,14 @@
-package com.example.projetofinal;
+package com.example.projetofinal.recyclerview;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.projetofinal.R;
+import com.example.projetofinal.recyclerview.ItemPost;
+import com.example.projetofinal.recyclerview.PostViewHolder;
 
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull com.example.projetofinal.PostViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         //convertendo o objet viewHolder para o nosso ViewHolder
         PostViewHolder produtVH = (PostViewHolder) holder;
 

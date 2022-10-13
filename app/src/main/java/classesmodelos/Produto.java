@@ -1,7 +1,5 @@
 package classesmodelos;
 
-import com.example.projetofinal.ItemPost;
-
 public class Produto {
     private String nome;
     private  Float preco;

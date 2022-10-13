@@ -65,7 +65,6 @@ public class Cadastro extends AppCompatActivity {
         btCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 //Indicando que irá utilizar o webservice rodando no localhost do computador
 
                 try {
@@ -122,6 +121,7 @@ public class Cadastro extends AppCompatActivity {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     error.printStackTrace();
+                                    Log.d()
                                     Toast.makeText(Cadastro.this, "Erro de resposta: " + error.toString(), Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -156,24 +156,3 @@ public class Cadastro extends AppCompatActivity {
         }
     }
 }
-      //private static String CadastroUsuarioBCDLocal(String u, String s, String e){
-
-
-         // Cadastro cadastro = new Cadastro();
-
-
-        //criar objeto da classe do banco dedados local
-         // BCDlocal bcd = new BCDlocal(cadastro,1);
-
-          //if(bcd.cadastrarUsuario(u,s,e)){
-           //   return "Usuario cadastrado com sucesso (Local)";
-
-
-       //   }else{
-              //return  "Erro ao cadastrar (Local)";
-         // }
-
-
-     // }
-
-   // }
