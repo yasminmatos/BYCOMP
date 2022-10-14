@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -49,8 +50,9 @@ public class Cadastro extends AppCompatActivity {
 
         btCadastrar = findViewById(R.id.btCadastrar);
 
-        RequestQueue queue = Volley.newRequestQueue(Cadastro.this);
-        String url = "http://10.0.2.2:5000/api/Usuario";
+
+
+        RequestQueue requisicao = Volley.newRequestQueue(Cadastro.this);
 
         txtentrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,99 +62,83 @@ public class Cadastro extends AppCompatActivity {
 
         });
 
-
         //metodo de cadastrar
         btCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Indicando que irá utilizar o webservice rodando no localhost do computador
-
-                try {
-
-                    //Criar um objeto que irá transformar os dados preenchidos na tela em JSON
-                    JSONObject dadosEnvio = new JSONObject();
-
-                    //parametros que ele espera receber
-                    dadosEnvio.put("senha", inputSenha.getText().toString());
-                    dadosEnvio.put("email", inputEmail.getText().toString());
-                    dadosEnvio.put("user", inputUser.getText().toString());
-
-                    //Configurar a requisição que será enviada ao webservice
-                    JsonObjectRequest configRequisicao = new JsonObjectRequest(Request.Method.POST,
-                            url, dadosEnvio,
-                            new Response.Listener<JSONObject>() {
-
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    try {
-                                        if (response.getInt("status") == 200) {
-                                            startActivity(new Intent(Cadastro.this, Bycomp.class));
-
-                                            //insere o usuario cadastrado no banco de dados local
-                                            Toast.makeText(Cadastro.this, "Passou por aqui", Toast.LENGTH_SHORT);
-
-                                            //objetos a serem utilizados
-                                            BCDlocal bd = null;
-                                            Usuario usuario = null;
-
-                                            //pega os dados do input e muda o nome
-                                            usuario.setNome(inputUser.getText().toString());
-                                            usuario.setSenha(inputSenha.getText().toString());
-
-                                            String resultado = bd.cadastrarUsuario(usuario);
-
-                                            Toast.makeText(Cadastro.this, "Cadastrado com sucesso", Toast.LENGTH_SHORT).show();
-
-                                            Log.d("Resultado: ", resultado);
-
-                                        } else {
-                                            Toast.makeText(Cadastro.this, "Verifique se os dados estão corretos", Toast.LENGTH_SHORT).show();
-                                        }
-                                    } catch (JSONException e) {
-
-                                        Toast.makeText(Cadastro.this, "nao feito" + e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                                        e.printStackTrace();
-                                        //Snackbar.make(findViewById(R.id.telaLogin), R.string.avisoErro, Snackbar.LENGTH_SHORT).show();
-                                    }
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    error.printStackTrace();
-                                    Log.d()
-                                    Toast.makeText(Cadastro.this, "Erro de resposta: " + error.toString(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                    );
-
-
-                    queue.add(configRequisicao);
-
-                } catch (Exception exc) {
-                    exc.printStackTrace();
-                    Toast.makeText(Cadastro.this, "Erro de conexao: " + exc, Toast.LENGTH_SHORT).show();
-                }
-
-
+                enviarDadosWebService();
             }
-
         });
 
-        //metodo para cadastrar o usuario no banco de dados local, deve ser puchado em um toast
-        // para aparacer a mensagem em questao se deu certo ou nao
 
+   // @SuppressWarnings("serial")
+    //public class ServerError extends VolleyError {
+      //  public ServerError(NetworkResponse networkResponse) {
+      //      super(networkResponse);
+       // }
+
+       // public ServerError() {
+      //      super();
+        //}
+  //  }
+//}
+
+
+    }
+    private void enviarDadosWebService(){
+        //URL
+        String url = "http://10.0.2.2:5001/api/Usuario";
+
+        try {
+            //Criar um objeto que irá transformar os dados preenchidos na tela em JSON
+            JSONObject dadosEnvio = new JSONObject();
+
+            //parametros que vão ser passados
+            dadosEnvio.put("senha", inputSenha.getText().toString());
+            dadosEnvio.put("email", inputEmail.getText().toString());
+            dadosEnvio.put("user", inputUser.getText().toString());
+
+            JsonObjectRequest configReq = new JsonObjectRequest(Request.Method.POST, url, dadosEnvio,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try{
+                                if(response.getInt("status") == 200){
+                                    startActivity(new Intent(Cadastro.this, Bycomp.class));
+                                    Toast.makeText(Cadastro.this, "Cadastrado com sucesso", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(Cadastro.this, "Verifique se os dados estão corretos", Toast.LENGTH_SHORT).show();
+                                }
+                            }catch (JSONException e){
+                                Toast.makeText(Cadastro.this, "Erro JSON: " + e.getMessage(), Toast.LENGTH_SHORT);
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener(){
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    Toast.makeText(Cadastro.this, "Erro de resposta: " + error.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+            );
+            RequestQueue requisicao = Volley.newRequestQueue(Cadastro.this);
+            requisicao.add(configReq);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @SuppressWarnings("serial")
-    public class ServerError extends VolleyError {
-        public ServerError(NetworkResponse networkResponse) {
-            super(networkResponse);
+    public class NoConnectionError extends NetworkError {
+        public NoConnectionError() {
+            super();
         }
 
-        public ServerError() {
-            super();
+        public NoConnectionError(Throwable reason) {
+            super(reason);
         }
     }
 }
+
