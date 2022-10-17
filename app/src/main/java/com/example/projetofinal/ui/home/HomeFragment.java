@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,41 +79,49 @@ public class HomeFragment extends Fragment {
 
         /*verificaçao de permiçao*/
 
-        if (ActivityCompat.checkSelfPermission(binding.home.getContext(), Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
-
-            //solicitar a permição do usuario
-
-            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},120);
 
 
+        if (ActivityCompat.checkSelfPermission(binding.home.getContext(), Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED)
+        {
+
+            //solicitar a permição do usuario, funciona caso seja permitido
+
+
+           requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},120);
 
         }
 
-            locationManager = (LocationManager) getSystemService(view.getContext().LOCATION_SERVICE);
-            location=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        locationManager = (LocationManager) getSystemService(view.getContext().LOCATION_SERVICE);
+        location=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+       // Log.e("TAGAPPEDRO", "----------->" + locationManager);
 
-        if (location != null){
+
+
+/*
+       if (location != null){
 
             longitude = location.getLongitude();
             latitude = location.getLatitude();
         }
+*/
 
+        /*
         //retornando um toast para ver os dados adquirido ,VOLTADO PARA TESTES ESSE TOAST
         try {
             endereco = BuscaEndereco(latitude,longitude);
 
-            Toast.makeText(view.getContext(), " Longitude "+latitude+
-                            "Latitude"+longitude+
-                            "Cidade"+endereco.getLocality()+
+           Toast.makeText(view.getContext(), " Latitude "+latitude+
+                   "Logitude"+longitude+
+                           "Cidade"+endereco.getLocality()+
                             "Estado"+endereco.getCountryName()
                     , Toast.LENGTH_SHORT).show();
 
 
         } catch (IOException e) {
-            e.printStackTrace();
+         e.printStackTrace();
         }
 
-
+*/
 
         IdLista.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,15 +218,6 @@ public class HomeFragment extends Fragment {
         //retorna o primeiro endereço
         return endereco;
     }
-
-
-
-
-
-
-
-
-
 
 
 
