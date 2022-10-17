@@ -121,7 +121,7 @@ public class Cadastro extends AppCompatActivity {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     error.printStackTrace();
-                                  //  Log.d();
+                                    Log.d()
                                     Toast.makeText(Cadastro.this, "Erro de resposta: " + error.toString(), Toast.LENGTH_SHORT).show();
                                 }
                             }
