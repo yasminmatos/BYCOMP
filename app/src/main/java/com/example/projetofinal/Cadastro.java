@@ -35,6 +35,7 @@ public class Cadastro extends AppCompatActivity {
     EditText inputUser;
     EditText inputSenha;
     EditText inputEmail;
+    String url = "http://10.0.2.2:5001/api/Usuario";
 
 
     @Override
@@ -86,9 +87,6 @@ public class Cadastro extends AppCompatActivity {
 
     }
     private void enviarDadosWebService(){
-        //URL
-        String url = "http://10.0.2.2:5001/api/Usuario";
-
         try {
             //Criar um objeto que irá transformar os dados preenchidos na tela em JSON
             JSONObject dadosEnvio = new JSONObject();
