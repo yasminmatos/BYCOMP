@@ -35,7 +35,8 @@ public class Cadastro extends AppCompatActivity {
     EditText inputUser;
     EditText inputSenha;
     EditText inputEmail;
-    String url = "http://10.0.2.2:5001/api/Usuario";
+
+
 
 
     @Override
@@ -50,10 +51,6 @@ public class Cadastro extends AppCompatActivity {
         txtentrar = findViewById(R.id.txtEntrar);
 
         btCadastrar = findViewById(R.id.btCadastrar);
-
-
-
-        RequestQueue requisicao = Volley.newRequestQueue(Cadastro.this);
 
         txtentrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,11 +80,11 @@ public class Cadastro extends AppCompatActivity {
         //}
   //  }
 //}
-
-
     }
     private void enviarDadosWebService(){
+        String url = "http://10.0.2.2:5001/api/Usuario";
         try {
+            //RequestQueue requisicao = Volley.newRequestQueue(Cadastro.this);
             //Criar um objeto que irá transformar os dados preenchidos na tela em JSON
             JSONObject dadosEnvio = new JSONObject();
 
@@ -133,7 +130,6 @@ public class Cadastro extends AppCompatActivity {
         public NoConnectionError() {
             super();
         }
-
         public NoConnectionError(Throwable reason) {
             super(reason);
         }
