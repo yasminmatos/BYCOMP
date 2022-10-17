@@ -91,6 +91,7 @@ public class HomeFragment extends Fragment {
 
         }
 
+        //esse aki é o problema
         locationManager = (LocationManager) getSystemService(view.getContext().LOCATION_SERVICE);
         location=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
        // Log.e("TAGAPPEDRO", "----------->" + locationManager);
