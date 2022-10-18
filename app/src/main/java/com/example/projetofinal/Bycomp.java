@@ -30,6 +30,7 @@ import java.util.List;
 
 public class Bycomp extends AppCompatActivity {
 
+    //A gente precisa resolver para pegar a cidadedo usuario
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityBycompBinding binding;
 
@@ -83,7 +84,7 @@ public class Bycomp extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},120);
         }
 
-        Toast.makeText(this, "Localizaçao pega", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Localização liberada", Toast.LENGTH_SHORT).show();
         //esse aki é o problema
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         location=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -95,33 +96,37 @@ public class Bycomp extends AppCompatActivity {
             latitude = location.getLatitude();
         }
 
-      /*  Toast.makeText(Bycomp.this, " Latitude "+latitude+
-                        "Logitude"+longitude+
-                        "Cidade"+endereco.getLocality()+
-                        "Estado"+endereco.getCountryName()
-                , Toast.LENGTH_SHORT).show();
-        Log.e("Mensagem","--------------------------->Logitude"+longitude+
-                "Cidade"+endereco.getLocality()+
-                "Estado"+endereco.getCountryName());*/
-
 
 
 //retornando um toast para ver os dados adquirido ,VOLTADO PARA TESTES ESSE TOAST
         try {
             endereco = BuscaEndereco(latitude,longitude);
 
-            Toast.makeText(this, " Latitude "+latitude+
-                            "Logitude"+longitude+
-                            "Cidade"+endereco.getLocality()+
-                            "Estado"+endereco.getCountryName()
+            //DAR UM JEITO DE PEGAR A O NOME DA CIDADE
+            Toast.makeText(this,
+                    "Latitude"+latitude+", "+
+                            "Logitude"+longitude+", "+
+                            "Bairro"+endereco.getSubLocality()+", "+//esse aki pega o bairro
+                            "Cidade"+ endereco.getLocality()+", "+
+                            "?"+ endereco.getFeatureName()+", "+
+                            "?"+ endereco.getLocale()+", "+
+
+
+                            "País "+endereco.getCountryName()
                     , Toast.LENGTH_SHORT).show();
 
-            Log.e("Mensagem","--------------------------->Logitude"+longitude+
-                    "Cidade"+endereco.getLocality()+
-                    "Estado"+endereco.getCountryName());
+            Log.e("Mensagem","--------------------------->" +
+                            "Latitude"+latitude+", "+
+                            "Logitude"+longitude+", "+
+                            "Bairro"+endereco.getSubLocality()+", "+//esse aki pega o bairro
+                            "Cidade"+ endereco.getLocality()+", "+
+                            "País "+endereco.getCountryName()+
+                    "?"+ endereco.getFeatureName()+", "+
+                            "?"+ endereco.getLocale());
 
 
         } catch (IOException e) {
+            Toast.makeText(this,  e.getMessage(), Toast.LENGTH_SHORT).show();
             Log.e("TAGCATCH", "---------------->" + e);
         }
 
