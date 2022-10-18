@@ -49,12 +49,6 @@ public class HomeFragment extends Fragment {
     FloatingActionButton btLerNota;
     TextView txtview;
 
-    //O classe abaixo irá fornecer os métodos para interagir com o GPS bem como recuperar os dados do posicionamento
-    private Location location;
-    private LocationManager locationManager;
-    private Address endereco;
-
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
@@ -72,15 +66,13 @@ public class HomeFragment extends Fragment {
         btLerNota = view.findViewById(R.id.btLerNota);
         txtview = view.findViewById(R.id.txtCronometro);
 
-        //uma das primeiras coisas a se fazer para pegar a localizaçao é pedir a permissao
-        //variveis para armazenar a latitude e a longitude
-        double latitude = 0.0;
-        double longitude = 0.0;
-
-        /*verificaçao de permiçao*/
 
 
 
+
+
+/*
+//referente ao antigo codigo de localizaçao
         if (ActivityCompat.checkSelfPermission(binding.home.getContext(), Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED)
         {
 
@@ -98,7 +90,7 @@ public class HomeFragment extends Fragment {
 
 
 
-/*
+
        if (location != null){
 
             longitude = location.getLongitude();
@@ -194,6 +186,8 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+/*
+//referente ao antigo codigo de localizaçao
 
     //metodo para achar o endereço do usuario
 
@@ -220,6 +214,6 @@ public class HomeFragment extends Fragment {
         return endereco;
     }
 
-
+*/
 
 }
