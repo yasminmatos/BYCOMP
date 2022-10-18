@@ -36,9 +36,6 @@ public class Cadastro extends AppCompatActivity {
     EditText inputSenha;
     EditText inputEmail;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,67 +61,65 @@ public class Cadastro extends AppCompatActivity {
         btCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                enviarDadosWebService();
+                enviarDadosWebservice();
             }
         });
 
 
-   // @SuppressWarnings("serial")
-    //public class ServerError extends VolleyError {
-      //  public ServerError(NetworkResponse networkResponse) {
-      //      super(networkResponse);
-       // }
+        // @SuppressWarnings("serial")
+        //public class ServerError extends VolleyError {
+        //  public ServerError(NetworkResponse networkResponse) {
+        //      super(networkResponse);
+        // }
 
-       // public ServerError() {
-      //      super();
+        // public ServerError() {
+        //      super();
         //}
-  //  }
+        //  }
 //}
     }
-    private void enviarDadosWebService(){
-        String url = "http://10.0.2.2:5001/api/Usuario";
+    private void enviarDadosWebservice(){
+        String url = "http://10.0.2.2:5000/api/Usuario";
+
         try {
-            //RequestQueue requisicao = Volley.newRequestQueue(Cadastro.this);
-            //Criar um objeto que irá transformar os dados preenchidos na tela em JSON
             JSONObject dadosEnvio = new JSONObject();
-
-            //parametros que vão ser passados
-            dadosEnvio.put("senha", inputSenha.getText().toString());
-            dadosEnvio.put("email", inputEmail.getText().toString());
             dadosEnvio.put("user", inputUser.getText().toString());
+            dadosEnvio.put("email", inputEmail.getText().toString());
+            dadosEnvio.put("senha", inputSenha.getText().toString());
 
-            JsonObjectRequest configReq = new JsonObjectRequest(Request.Method.POST, url, dadosEnvio,
+            //Configurar a requisição que será enviada ao webservice
+            JsonObjectRequest configRequisicao = new JsonObjectRequest(Request.Method.POST,
+                    url, dadosEnvio,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            try{
+                            try {
                                 if(response.getInt("status") == 200){
-                                    startActivity(new Intent(Cadastro.this, Bycomp.class));
-                                    Toast.makeText(Cadastro.this, "Cadastrado com sucesso", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(Cadastro.this, "Verifique se os dados estão corretos", Toast.LENGTH_SHORT).show();
+                                    Snackbar.make(findViewById(R.id.actyCadastro),"Cadastrado com sucesso ", Snackbar.LENGTH_SHORT).show();
+                                }else{
+                                    Snackbar.make(findViewById(R.id.actyCadastro), "Erro ao cadastrar", Snackbar.LENGTH_SHORT).show();
                                 }
-                            }catch (JSONException e){
-                                Toast.makeText(Cadastro.this, "Erro JSON: " + e.getMessage(), Toast.LENGTH_SHORT);
+                            } catch (JSONException e) {
                                 e.printStackTrace();
+                                Snackbar.make(findViewById(R.id.actyCadastro), "JsonException: " + e.toString(), Snackbar.LENGTH_SHORT).show();
                             }
                         }
-                    }, new Response.ErrorListener(){
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    error.printStackTrace();
-                    Toast.makeText(Cadastro.this, "Erro de resposta: " + error.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+                            Snackbar.make(findViewById(R.id.actyCadastro), "Erro de resposta: " + error.toString(), Snackbar.LENGTH_SHORT).show();
+                        }
+                    }
             );
             RequestQueue requisicao = Volley.newRequestQueue(Cadastro.this);
-            requisicao.add(configReq);
+            requisicao.add(configRequisicao);
 
-        }catch (Exception e){
-            e.printStackTrace();
+        }catch (Exception exc){
+            exc.printStackTrace();
         }
     }
-
     @SuppressWarnings("serial")
     public class NoConnectionError extends NetworkError {
         public NoConnectionError() {
