@@ -82,12 +82,19 @@ public class Login extends AppCompatActivity {
         btLogar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 startActivity(new Intent(Login.this, Bycomp.class));
 
                 //verifica se os campos estão preenchidos
                 if(TextUtils.isEmpty(userEd.getText().toString().trim()) && TextUtils.isEmpty(senhaEd.getText().toString().trim())){
                     Toast.makeText(Login.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
                 } else {
+                    //implementando firebase
+
+
+
+
+
                     //faz o login
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     // pega os valores e coloca no shared preferences
@@ -98,7 +105,13 @@ public class Login extends AppCompatActivity {
                 }
 
 
-                /*//Indicando que irá utilizar o webservice rodando no localhost do computador
+
+            }
+        });
+ /*
+
+                //metodo do conecn=çao como mysql
+                //Indicando que irá utilizar o webservice rodando no localhost do computador
                 String url = "http://10.0.2.2:5000/api/Usuario";
 
                 try {
@@ -158,9 +171,6 @@ public class Login extends AppCompatActivity {
                     exc.printStackTrace();
                     Toast.makeText(Login.this, "Erro do envio de dados: " + exc.toString(), Toast.LENGTH_SHORT).show();
                 }*/
-            }
-        });
-
 
 
     }

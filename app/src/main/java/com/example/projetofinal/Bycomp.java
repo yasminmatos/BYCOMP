@@ -106,6 +106,7 @@ public class Bycomp extends AppCompatActivity {
             Toast.makeText(this,
                     "Latitude"+latitude+", "+
                             "Logitude"+longitude+", "+
+
                             "Bairro"+endereco.getSubLocality()+", "+//esse aki pega o bairro
                             "Cidade"+ endereco.getLocality()+", "+
                             "?"+ endereco.getFeatureName()+", "+

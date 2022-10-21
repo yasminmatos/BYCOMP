@@ -1,5 +1,6 @@
 package com.example.projetofinal;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -20,17 +21,31 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Document;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import classesmodelos.BCDlocal;
 import classesmodelos.Usuario;
 
 public class Cadastro extends AppCompatActivity {
 
-    String usuario, senha;
+
+
+    private FirebaseAuth mAuth;
 
     TextView txtentrar;
     Button btCadastrar;
@@ -43,6 +58,8 @@ public class Cadastro extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
+
+        mAuth = FirebaseAuth.getInstance();
 
         inputUser = findViewById(R.id.inputUser);
         inputSenha = findViewById(R.id.inputSenha);
@@ -63,9 +80,75 @@ public class Cadastro extends AppCompatActivity {
         btCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//implementando firebase
+
+                String usuario, senha, email;
+
+                usuario = inputUser.getText().toString();
+                senha= inputSenha.getText().toString();
+                email= inputEmail.getText().toString();
+
+//pegando as strigs e as colocando como parametro, é criado um metodo do firebase
+                FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+
+                            //pega uma instancia do usuario em questao ao salvar
+                            FirebaseFirestore ff = FirebaseFirestore.getInstance();
+
+                            //usado com lista definidora para salvamentod de várias informações
+                            Map<String, Object> mp = new HashMap<>();
+
+                            mp.put("nome usuario", usuario);
+                            mp.put("senha", senha);
+                            mp.put("email", email);
+
+                            //o qeu sera colocado no firebase, expecificando as coleçoes (usuarios no caso)
+                            DocumentReference documentReference = ff.collection("Usuarios").document(email);
+
+                            //aplica no firebase as informaçoes montadas antes
+
+
+                            try {
+                                documentReference.set(mp).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+
+                                        Log.e("TAGGGGG", "Cadastro efetivado");
+
+
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+                                        Log.e("TAGGGGG", "---->" + e);
+
+                                    }
+                                });
+
+                            }
+                            catch (Exception e){
+
+
+                                Log.e("ERROOOO", "------>" + e);
+
+
+                            }
+                            }
+
+                    }
+                });
+
+
 
             }
         });
+
+
+
+
 
 
         // @SuppressWarnings("serial")
@@ -80,6 +163,8 @@ public class Cadastro extends AppCompatActivity {
         //  }
 //}
     }
+
+
     /*private void enviarDadosWebservice(){
         String url = "http://10.0.2.2:5000/api/Usuario";
 
@@ -131,5 +216,7 @@ public class Cadastro extends AppCompatActivity {
             super(reason);
         }
     }*/
+
+
 }
 
