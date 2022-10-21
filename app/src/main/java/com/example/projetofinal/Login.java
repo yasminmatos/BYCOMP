@@ -83,14 +83,11 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
+                startActivity(new Intent(Login.this, Bycomp.class));
 
                 //verifica se os campos estão preenchidos
                 if(TextUtils.isEmpty(userEd.getText().toString().trim()) && TextUtils.isEmpty(senhaEd.getText().toString().trim())){
                     Toast.makeText(Login.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
-
-
-
                 } else {
                     //implementando firebase
 
@@ -107,7 +104,7 @@ public class Login extends AppCompatActivity {
                     editor.apply();
                 }
 
-                startActivity(new Intent(Login.this, Bycomp.class));
+
 
             }
         });
