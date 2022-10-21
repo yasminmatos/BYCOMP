@@ -28,6 +28,8 @@ import com.example.projetofinal.databinding.ActivityBycompBinding;
 import java.io.IOException;
 import java.util.List;
 
+import classesmodelos.Usuario;
+
 public class Bycomp extends AppCompatActivity {
 
     //A gente precisa resolver para pegar a cidadedo usuario
@@ -79,14 +81,14 @@ public class Bycomp extends AppCompatActivity {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED)
         {
-
             //solicitar a permição do usuario, funciona caso seja permitido
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},120);
         }
 
         Toast.makeText(this, "Localização liberada", Toast.LENGTH_SHORT).show();
-        //esse aki é o problema
+
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
         location=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
 
@@ -94,25 +96,31 @@ public class Bycomp extends AppCompatActivity {
 
             longitude = location.getLongitude();
             latitude = location.getLatitude();
+
         }
 
 
-
-//retornando um toast para ver os dados adquirido ,VOLTADO PARA TESTES ESSE TOAST
+        //retornando um toast para ver os dados adquirido ,VOLTADO PARA TESTES ESSE TOAST
         try {
             endereco = BuscaEndereco(latitude,longitude);
+            Log.e("Endereço","--------------------------->" +
+                    endereco);
+
+
+            //objeto provisorio , so para deixar claro que a loalizaçao sera armazenada no usuario
+          Usuario usuario = new Usuario(endereco.getSubLocality(),"yasy","yaaas@gmail.com","yasy1234");
+
+
 
             //DAR UM JEITO DE PEGAR A O NOME DA CIDADE
-            Toast.makeText(this,
+           Toast.makeText(this,
                     "Latitude"+latitude+", "+
                             "Logitude"+longitude+", "+
-
                             "Bairro"+endereco.getSubLocality()+", "+//esse aki pega o bairro
+                            "Cidade"+ endereco.getLocality()+", "+
                             "Cidade"+ endereco.getLocality()+", "+
                             "?"+ endereco.getFeatureName()+", "+
                             "?"+ endereco.getLocale()+", "+
-
-
                             "País "+endereco.getCountryName()
                     , Toast.LENGTH_SHORT).show();
 
@@ -121,14 +129,23 @@ public class Bycomp extends AppCompatActivity {
                             "Logitude"+longitude+", "+
                             "Bairro"+endereco.getSubLocality()+", "+//esse aki pega o bairro
                             "Cidade"+ endereco.getLocality()+", "+
-                            "País "+endereco.getCountryName()+
+                    "Cidade"+ endereco.getLocality()+", "+
+
+                    "País "+endereco.getCountryName()+
                     "?"+ endereco.getFeatureName()+", "+
                             "?"+ endereco.getLocale());
 
+        }
 
-        } catch (IOException e) {
+        catch (IOException e) {
             Toast.makeText(this,  e.getMessage(), Toast.LENGTH_SHORT).show();
             Log.e("TAGCATCH", "---------------->" + e);
+        }
+
+        catch (Exception e ){
+
+            Log.e("errrooooo","-------------------->"+e);
+
         }
 
     }

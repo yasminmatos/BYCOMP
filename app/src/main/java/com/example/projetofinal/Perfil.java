@@ -19,8 +19,6 @@ import classesmodelos.Usuario;
 
 public class Perfil extends Fragment {
 
-
-
     Button btAlterarDados;
     Button btAlterarSenha;
     EditText inputNomeUsuario;
@@ -71,6 +69,7 @@ public class Perfil extends Fragment {
         v = inflater.inflate(R.layout.fragment_perfil, container, false);
 
         try {
+            //objt de testes
             Usuario usuario = new Usuario("Campinas", "marina", "marina@gmail.com", "1234");
 
             //declarando os inputs / pegar informações dos inputs
@@ -79,6 +78,7 @@ public class Perfil extends Fragment {
             textView38 = v.findViewById(R.id.textView38);
             inputNomeUsuario = v.findViewById(R.id.inputNomeUsuario);
             inputEmailUsuario = v.findViewById(R.id.inputEmailUsuario);
+
             btAlterarDados = v.findViewById(R.id.btAlterarDados);
             btAlterarSenha = v.findViewById(R.id.btAlterarSenha);
 
@@ -92,8 +92,8 @@ public class Perfil extends Fragment {
 
             // pegar as informações do banco local e passar para os inputs
 
-            inputNomeUsuario.setText(usuario.getNome());
-            inputEmailUsuario.setText(usuario.getEmail());
+            inputNomeUsuario.setHint(usuario.getNome());
+            inputEmailUsuario.setHint(usuario.getEmail());
         }
         catch (Exception e) {
             Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
