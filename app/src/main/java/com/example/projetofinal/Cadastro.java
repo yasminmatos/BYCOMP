@@ -3,6 +3,7 @@ package com.example.projetofinal;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +30,8 @@ import classesmodelos.Usuario;
 
 public class Cadastro extends AppCompatActivity {
 
+    String usuario, senha;
+
     TextView txtentrar;
     Button btCadastrar;
 
@@ -45,8 +48,8 @@ public class Cadastro extends AppCompatActivity {
         inputSenha = findViewById(R.id.inputSenha);
         inputEmail = findViewById(R.id.inputEmail);
 
-        txtentrar = findViewById(R.id.txtEntrar);
 
+        txtentrar = findViewById(R.id.txtEntrar);
         btCadastrar = findViewById(R.id.btCadastrar);
 
         txtentrar.setOnClickListener(new View.OnClickListener() {
@@ -54,14 +57,13 @@ public class Cadastro extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(Cadastro.this, Login.class));
             }
-
         });
 
         //metodo de cadastrar
         btCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                enviarDadosWebservice();
+
             }
         });
 
@@ -78,7 +80,7 @@ public class Cadastro extends AppCompatActivity {
         //  }
 //}
     }
-    private void enviarDadosWebservice(){
+    /*private void enviarDadosWebservice(){
         String url = "http://10.0.2.2:5000/api/Usuario";
 
         try {
@@ -128,6 +130,6 @@ public class Cadastro extends AppCompatActivity {
         public NoConnectionError(Throwable reason) {
             super(reason);
         }
-    }
+    }*/
 }
 

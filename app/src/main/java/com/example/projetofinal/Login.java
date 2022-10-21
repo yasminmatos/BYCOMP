@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 //import android.graphics.Bitmap;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 //import android.util.Base64;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,9 +37,22 @@ import classesmodelos.Usuario;
 
 public class Login extends AppCompatActivity {
 
-    EditText user, senha;
+    //criando chaves constantes para o shared preferences
+    public static final String SHARED_PREFS = "shared_prefs";
+
+    //chave para guardar o user
+    public static final String USUARIO_KEY = "usuario_key";
+
+    //chave para guardar a senha
+    public static final String SENHA_KEY = "senha_key";
+
+    // variaveis para o shared preferences
+    SharedPreferences sharedpreferences;
+
+    EditText userEd, senhaEd;
     TextView Criarconta;
     Button btLogar;
+    String user, senha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,17 +62,18 @@ public class Login extends AppCompatActivity {
         //pegando os ids
         Criarconta= findViewById(R.id.Criarconta);
         btLogar = findViewById(R.id.btLogar);
-        user = findViewById(R.id.inputUserL);
-        senha = findViewById(R.id.inputSenhaL);
+        userEd = findViewById(R.id.inputUserL);
+        senhaEd = findViewById(R.id.inputSenhaL);
 
+        sharedpreferences = getSharedPreferences(SHARED_PREFS, Cadastro.MODE_PRIVATE);
+        user = sharedpreferences.getString(USUARIO_KEY, null);
+        senha = sharedpreferences.getString(SENHA_KEY, null);
 
-        //ir oara tela de cadastro
+        //ir para tela de cadastro
         Criarconta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent( Login.this,Cadastro.class)
-
-
                 );
             }
         });
@@ -67,7 +83,22 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Login.this, Bycomp.class));
-                //Indicando que irá utilizar o webservice rodando no localhost do computador
+
+                //verifica se os campos estão preenchidos
+                if(TextUtils.isEmpty(userEd.getText().toString().trim()) && TextUtils.isEmpty(senhaEd.getText().toString().trim())){
+                    Toast.makeText(Login.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+                } else {
+                    //faz o login
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    // pega os valores e coloca no shared preferences
+                    editor.putString(USUARIO_KEY, userEd.getText().toString());
+                    editor.putString(SENHA_KEY, senhaEd.getText().toString());
+
+                    editor.apply();
+                }
+
+
+                /*//Indicando que irá utilizar o webservice rodando no localhost do computador
                 String url = "http://10.0.2.2:5000/api/Usuario";
 
                 try {
@@ -126,9 +157,8 @@ public class Login extends AppCompatActivity {
                 } catch (Exception exc) {
                     exc.printStackTrace();
                     Toast.makeText(Login.this, "Erro do envio de dados: " + exc.toString(), Toast.LENGTH_SHORT).show();
-                }
+                }*/
             }
-
         });
 
 
