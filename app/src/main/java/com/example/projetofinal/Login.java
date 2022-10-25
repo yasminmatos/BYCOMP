@@ -27,7 +27,6 @@ import com.google.android.material.snackbar.Snackbar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import classesmodelos.BCDlocal;
 import classesmodelos.Usuario;
 
 //import java.io.ByteArrayOutputStream;
