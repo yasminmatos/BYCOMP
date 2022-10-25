@@ -1,5 +1,6 @@
 package com.example.projetofinal;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 //import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -22,7 +23,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.projetofinal.ui.home.HomeFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,10 +55,18 @@ public class Login extends AppCompatActivity {
     // variaveis para o shared preferences
     SharedPreferences sharedpreferences;
 
-    EditText userEd, senhaEd;
+    FirebaseAuth mAuth;
+    EditText emailEd, senhaEd;
     TextView Criarconta;
     Button btLogar;
-    String user, senha;
+    String email, senha;
+    Usuario u;
+
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +76,14 @@ public class Login extends AppCompatActivity {
         //pegando os ids
         Criarconta= findViewById(R.id.Criarconta);
         btLogar = findViewById(R.id.btLogar);
-        userEd = findViewById(R.id.inputUserL);
+        emailEd = findViewById(R.id.edtEmail);
         senhaEd = findViewById(R.id.inputSenhaL);
+        mAuth = FirebaseAuth.getInstance();
 
-        sharedpreferences = getSharedPreferences(SHARED_PREFS, Cadastro.MODE_PRIVATE);
-        user = sharedpreferences.getString(USUARIO_KEY, null);
-        senha = sharedpreferences.getString(SENHA_KEY, null);
+       // sharedpreferences = getSharedPreferences(SHARED_PREFS, Cadastro.MODE_PRIVATE);
+        //email = sharedpreferences.getString(USUARIO_KEY, null);
+        //senha = sharedpreferences.getString(SENHA_KEY, null);
+
 
         //ir para tela de cadastro
         Criarconta.setOnClickListener(new View.OnClickListener() {
@@ -79,98 +96,45 @@ public class Login extends AppCompatActivity {
 
         //entrar na tela do aplicativo
         btLogar.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
+                email = emailEd.getText().toString();
+                senha = senhaEd.getText().toString();
 
-                startActivity(new Intent(Login.this, Bycomp.class));
+                try{
+                    //verifica se os campos estão preenchidos
+                    if(TextUtils.isEmpty(emailEd.getText().toString().trim()) && TextUtils.isEmpty(senhaEd.getText().toString().trim())){
+                        Toast.makeText(Login.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+                    } else {
 
-                //verifica se os campos estão preenchidos
-                if(TextUtils.isEmpty(userEd.getText().toString().trim()) && TextUtils.isEmpty(senhaEd.getText().toString().trim())){
-                    Toast.makeText(Login.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
-                } else {
-                    //implementando firebase
+                        mAuth.signInWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()){
+                                    startActivity(new Intent( Login.this, HomeFragment.class));
+                                    Toast.makeText(Login.this, "Bem-vindo", Toast.LENGTH_SHORT).show();
+                                    // Sign in success, update UI with the signed-in user's information
+                                    //FirebaseUser user = mAuth.getCurrentUser();
+                                    //updateUI(user);
+                                } else {
+                                    Toast.makeText(Login.this, "Verifique se o email e a senha estão corretos", Toast.LENGTH_SHORT).show();
+                                    // If sign in fails, display a message to the user.
 
+                                    //updateUI(null);
+                                }
 
+                            }
+                        });
 
+                    }
 
+                } catch (Exception e){
+                    e.getStackTrace();
 
-                    //faz o login
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    // pega os valores e coloca no shared preferences
-                    editor.putString(USUARIO_KEY, userEd.getText().toString());
-                    editor.putString(SENHA_KEY, senhaEd.getText().toString());
-
-                    editor.apply();
                 }
-
-
 
             }
         });
- /*
-
-                //metodo do conecn=çao como mysql
-                //Indicando que irá utilizar o webservice rodando no localhost do computador
-                String url = "http://10.0.2.2:5000/api/Usuario";
-
-                try {
-                    //Criar um objeto que irá transformar os dados preenchidos na tela em JSON
-                    JSONObject dadosEnvio = new JSONObject();
-                    //O nome dos parâmetros precisam ser iguais ao que o webservice espera receber
-                    dadosEnvio.put("user", user.getText().toString());
-                    dadosEnvio.put("senha", senha.getText().toString());
-
-                    //Configurar a requisição que será enviada ao webservice
-                    JsonObjectRequest configRequisicao = new JsonObjectRequest(Request.Method.POST,
-                            url, dadosEnvio,
-                            new Response.Listener<JSONObject>() {
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    try {
-                                        //verifica se existe aquele user no banco
-                                        if (response.getInt("status") == 200) {
-                                            //cadastrar usuatio no banco de dados local
-                                            //variaveis a serem utilizadas
-                                            BCDlocal bd =  null;
-                                            Usuario u = null;
-                                            String resultado;
-
-                                            //pega os dados do input e coloca na variavel do tipo Usuario
-                                            u.setNome(user.getText().toString());
-                                            u.setSenha(user.getText().toString());
-
-                                            //coloca os dados no método que verifica os dados no banco local
-                                            resultado = bd.Logar(u);
-                                            Toast.makeText(Login.this, "Bem-vindo", Toast.LENGTH_SHORT).show();
-                                            //vai para a tela inicial
-                                            Intent it = new Intent(Login.this, HomeFragment.class); //activity para um fragmento
-                                            startActivity(it);
-                                        } else {
-                                            Toast.makeText(Login.this, "Verifque se os dados estão corretos", Toast.LENGTH_SHORT).show();
-                                        }
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                        Toast.makeText(Login.this, "Erro do JSON:" + e.toString(), Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    error.printStackTrace();
-                                    Toast.makeText(Login.this, "Erro resposta: " + error.toString(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                    );
-
-                    RequestQueue requisicao = Volley.newRequestQueue(Login.this);
-                    requisicao.add(configRequisicao);
-
-                } catch (Exception exc) {
-                    exc.printStackTrace();
-                    Toast.makeText(Login.this, "Erro do envio de dados: " + exc.toString(), Toast.LENGTH_SHORT).show();
-                }*/
-
-
     }
 }

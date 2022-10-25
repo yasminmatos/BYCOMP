@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,7 @@ import java.util.List;
 public class Lista<Int> extends Fragment {
 
     //variaveis
+    private FirebaseAuth mAuth;
     View v;
     EditText listaCompras;
     Button pesq;
@@ -34,7 +37,7 @@ public class Lista<Int> extends Fragment {
     List<String> mercados = new ArrayList<String>(); //lista que vai receber os mercados
 
 
-    // TODO: Rename parameter arguments, choose names that match
+    /*// TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -47,15 +50,6 @@ public class Lista<Int> extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment lista.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Lista newInstance(String param1, String param2) {
         Lista fragment = new Lista();
         Bundle args = new Bundle();
@@ -63,7 +57,14 @@ public class Lista<Int> extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
+    }*/
+
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    private String mParam1;
+    private String mParam2;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,12 +77,13 @@ public class Lista<Int> extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_lista, container, false);
-
+        //achando os ids
         Button btNavegar = v.findViewById(R.id.butPesq);
+        //lista = findViewById(R.id.listaProdutos);
+
 
         btNavegar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +92,7 @@ public class Lista<Int> extends Fragment {
             }
         });
 
+        mAuth = FirebaseAuth.getInstance();
 
         return  v;
 
